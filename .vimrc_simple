@@ -1,0 +1,42 @@
+" Necesary  for lots of cool vim things
+set nocompatible
+
+" line numbering
+set number relativenumber
+
+filetype plugin indent on
+
+" show existing tab with 4 spaces width
+set tabstop=4
+
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+
+" On pressing tab, insert 4 spaces
+set expandtab
+
+syntax on
+
+colorscheme delek
+
+" Cool tab completion stuff
+set wildmenu
+set wildmode=list:longest,full
+
+" Highlight things that we find with the search
+"set hlsearch
+
+" Enable collapsing (folding of functions)
+set foldmethod=indent
+set foldlevel=99
+
+" python PEP 8 conform
+au BufNewFile,BufRead *.py:
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
