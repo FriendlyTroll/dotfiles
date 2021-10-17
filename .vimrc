@@ -56,7 +56,10 @@ set fileencoding=utf-8
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set colorcolumn=80
+
+" color the column 80
+"set colorcolumn=80
+
 set expandtab
 set viminfo='25,\"50,n~/.viminfo
 autocmd FileType html setlocal tabstop=2 shiftwidth=2 softtabstop=2
@@ -203,3 +206,8 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
+" search for filenams with F3 key (fzf-vim shortcuts)
+nnoremap <F3> :Files<CR>
+
+" search whole word within files recursively with Shift+f
+nnoremap <s-f> :vimgrep // **<left><left><left><left>
