@@ -8,6 +8,7 @@ endif
 
 call plug#begin()
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'joshdick/onedark.vim'
 Plug 'ap/vim-buftabline'
@@ -106,7 +107,15 @@ filetype plugin indent on
 
 " lightline
 set noshowmode
-let g:lightline = { 'colorscheme': 'onedark' }
+let g:lightline = { 'colorscheme': 'onedark',
+                  \ 'active': {
+                  \ 'left': [ [ 'mode', 'paste' ],
+                  \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+                  \ },
+                  \ 'component_function': {
+                  \ 'gitbranch': 'FugitiveHead' },
+                  \ }
+
 
 " code folding
 set foldmethod=indent
