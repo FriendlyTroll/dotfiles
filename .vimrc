@@ -220,3 +220,6 @@ nnoremap <F3> :Files<CR>
 
 " search whole word within files recursively with Shift+f
 nnoremap <s-f> :vimgrep // **<left><left><left><left>
+
+" switch to next buffer and close previous
+nnoremap <F12> :NERDTreeClose<bar>bn<bar>bd #<CR>
