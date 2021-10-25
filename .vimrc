@@ -224,4 +224,4 @@ nnoremap <F4> :vimgrep // **<left><left><left><left>
 " switch to next buffer and close previous
 nnoremap <F12> :NERDTreeClose<bar>bn<bar>bd #<CR>
 " show opened file in tree
-nnoremap <F3> :NERDTreeFind<CR>
+nnoremap <F5> :NERDTreeFind<CR>
