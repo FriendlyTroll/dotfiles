@@ -225,3 +225,7 @@ nnoremap <F4> :vimgrep // **<left><left><left><left>
 nnoremap <F12> :NERDTreeToggle<bar>bd<bar>NERDTreeToggle<bar><CR><c-w>l
 " show opened file in tree
 nnoremap <F5> :NERDTreeFind<CR>
+
+" this will read so called modelines from opened files which
+" can automatically set vim options like syntax highlighting
+set modeline
