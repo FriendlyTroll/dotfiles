@@ -229,3 +229,7 @@ nnoremap <F5> :NERDTreeFind<CR>
 " this will read so called modelines from opened files which
 " can automatically set vim options like syntax highlighting
 set modeline
+
+" exit insert mode when typing jj quickly
+inoremap jj <ESC>
+
