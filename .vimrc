@@ -233,3 +233,7 @@ set modeline
 " exit insert mode when typing jj quickly
 inoremap jj <ESC>
 
+" yank name of current file to system clipboard
+nmap cp :let @+ = expand("%")<cr>
+" full path
+nmap cP :let @+ = expand("%:p")<cr>
