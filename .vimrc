@@ -26,6 +26,7 @@ Plug 'alvan/vim-closetag'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'tommcdo/vim-fubitive'
 call plug#end()
 
 filetype plugin indent on
