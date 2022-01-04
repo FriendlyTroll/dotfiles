@@ -1,0 +1,39 @@
+---
+- name: Vagrant setup
+  hosts: all
+  become: true
+  tasks:
+  - name: Install stuff
+    apt:
+        name:
+            - python-setuptools
+            - python-pip
+            - git
+            - software-properties-common
+        state: latest
+        update_cache: yes
+  
+  - name: Add my ssh key
+    authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file', '/home/antisa/.ssh/id_ed25519.pub') }}"
+
+  - name: Add APT gpg key for Docker repo
+    apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+  - name: Add docker repo
+    apt_repository:
+        #repo: "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+        repo: "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+        state: present
+
+  - name: Install docker
+    apt:
+        name:
+            - docker-ce
+            - python-docker
+        update_cache: yes
+        state: latest
