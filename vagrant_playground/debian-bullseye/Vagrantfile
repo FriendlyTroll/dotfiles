@@ -7,19 +7,19 @@ Vagrant.configure("2") do |config|
     web.vm.hostname = "bullseyeweb"
   end
 
-#  config.vm.define "db" do |db|
-#    db.vm.box = "debian/bullseye64"
-#    db.vm.network "private_network", ip: "10.21.21.61"
-#    db.vm.hostname = "bullseyedb"
-#  end
+  #config.vm.define "db" do |db|
+  #  db.vm.box = "debian/bullseye64"
+  #  db.vm.network "private_network", ip: "10.21.21.61"
+  #  db.vm.hostname = "bullseyedb"
+  #end
 
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
     vb.gui = false
   
     # Customize the amount of memory on the VM:
-    vb.memory = "2048"
-    vb.cpus = 2
+    vb.memory = "5192"
+    vb.cpus = 4
   end
   
   config.vm.provision "ansible" do |ansible|

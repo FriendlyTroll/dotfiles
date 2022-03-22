@@ -2,49 +2,67 @@
 - name: Vagrant setup
   hosts: all
   become: true
-  #  vars:
+  vars:
+      docker_compose_version: v2.2.3
+
   #    ansible_python_interpreter: /usr/bin/python3
   tasks:
-  - name: Add APT gpg key for Docker repo
-    apt_key:
-        url: https://download.docker.com/linux/debian/gpg
-        state: present
+    - name: Add my ssh key
+      authorized_key:
+          user: root
+          state: present
+          key: "{{ lookup('file', '/home/antisa/.ssh/id_ed25519.pub') }}"
 
-  - name: Check on which Debian we are
-    command: lsb_release -cs
-    register: debian_version
-  - debug:
-      msg: "{{ debian_version.stdout }}"
+    - name: Check on which Debian we are
+      command: lsb_release -cs
+      register: debian_version
+    
+    - debug:
+        msg: "{{ debian_version.stdout }}"
+    
+    - name: Install some useful pkgs
+      apt:
+          name:
+              - gpg
+              - git
+              - software-properties-common
+              - unzip
+              - rsync
+          state: latest
+          update_cache: yes
+      
+    - name: Add APT gpg key for Docker repo
+      apt_key:
+          url: https://download.docker.com/linux/debian/gpg
+          state: present
+      
+      
+    - name: Add docker repo
+      apt_repository:
+          repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ debian_version.stdout }} stable"
+          state: present
+      
+    - name: Install docker
+      apt:
+          name:
+              - docker-ce
+          state: latest
+          update_cache: yes
 
-  - name: Add docker repo
-    apt_repository:
-        repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ debian_version.stdout }} stable"
-        state: present
-
-  - name: Add my ssh key
-    authorized_key:
-        user: root
-        state: present
-        key: "{{ lookup('file', '/home/antisa/.ssh/id_ed25519.pub') }}"
-
-  - name: Install some useful pkgs
-    apt:
-        name:
-            - git
-            - software-properties-common
-            - unzip
-            - docker-ce
-        state: latest
-        update_cache: yes
-
-  - name: Set timezone
-    timezone:
-        name: Europe/Zagreb
-
-  - name: Debian 8 tasks
-    include: debian8.yml
-    when: ansible_distribution == 'Debian' and (ansible_distribution_major_version == '8' or ansible_distribution_major_version == '9')
-
-  - name: Debian 11 tasks
-    include: debian11.yml
-    when: ansible_distribution == 'Debian' and (ansible_distribution_major_version == '10' or ansible_distribution_major_version == '11')
+    - name: Install docker compose
+      get_url:
+          url: 'https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-linux-x86_64'
+          dest: /usr/local/bin/docker-compose
+          mode: '0755'
+    
+    - name: Set timezone
+      timezone:
+          name: Europe/Berlin
+    
+    - name: Debian 8 tasks
+      include: debian8.yml
+      when: ansible_distribution == 'Debian' and (ansible_distribution_major_version == '8' or ansible_distribution_major_version == '9')
+    
+    - name: Debian 11 tasks
+      include: debian11.yml
+      when: ansible_distribution == 'Debian' and (ansible_distribution_major_version == '10' or ansible_distribution_major_version == '11')
